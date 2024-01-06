@@ -78,8 +78,8 @@
       handleDraw();
 
       const handleResize = () => {
-        ctx.clearRect(xMoveTemp - 100, yMoveTemp - 100, 1000, 1000);
-        ctx.clearRect(xLineTemp - 100, yLineTemp - 100, 1000, 1000);
+        ctx.clearRect(xMoveTemp - 100, yMoveTemp - 100, img.width, img.height);
+        ctx.clearRect(xLineTemp - 100, yLineTemp - 100, img.width, img.height);
         handleDraw();
       };
 
