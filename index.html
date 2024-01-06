@@ -43,28 +43,47 @@
       const img = document.getElementById("imageId");
       const canvas = document.getElementById("canvasId");
 
+      let xMoveTemp = 0;
+      let yMoveTemp = 0;
+      let xLineTemp = 0;
+      let yLineTemp = 0;
+
       canvas.width = img.width;
       canvas.height = img.height;
       const ctx = canvas.getContext("2d");
 
-      const scale = img.width / 1440;
-
       const draw = (xMove, yMove, xLine, yLine) => {
+        const scale = img.width / 1440;
         ctx.beginPath();
         ctx.lineWidth = "3";
         ctx.strokeStyle = "#56E330";
         ctx.moveTo(xMove * scale, yMove * scale);
         ctx.lineTo(xLine * scale, yLine * scale);
         ctx.stroke();
+        xMoveTemp = xMove * scale;
+        yMoveTemp = yMove * scale;
+        xLineTemp = xLine * scale;
+        yLineTemp = yLine * scale;
       };
 
-      coordinates.forEach((val, idx, arr) => {
-        if (idx < coordinates.length - 1) {
-          draw(val[0], val[1], arr[idx + 1][0], arr[idx + 1][1]);
-        } else {
-          draw(val[0], val[1], arr[0][0], arr[0][1]);
-        }
-      });
+      const handleDraw = () => {
+        coordinates.forEach((val, idx, arr) => {
+          if (idx < coordinates.length - 1) {
+            draw(val[0], val[1], arr[idx + 1][0], arr[idx + 1][1]);
+          } else {
+            draw(val[0], val[1], arr[0][0], arr[0][1]);
+          }
+        });
+      };
+      handleDraw();
+
+      const handleResize = () => {
+        ctx.clearRect(xMoveTemp - 100, yMoveTemp - 100, 1000, 1000);
+        ctx.clearRect(xLineTemp - 100, yLineTemp - 100, 1000, 1000);
+        handleDraw();
+      };
+
+      window.addEventListener("resize", handleResize);
     </script>
   </body>
 </html>
